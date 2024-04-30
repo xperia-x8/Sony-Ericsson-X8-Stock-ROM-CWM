@@ -4,4 +4,4 @@
 ## Mirrors
 
 ## Requirements
-* Root [Repo](https://github.com/xperia-x8/Sony-Ericsson-X8-Stock-ROM-Root)
+* Root ([Repo](https://github.com/xperia-x8/Sony-Ericsson-X8-Stock-ROM-Root))
