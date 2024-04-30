@@ -1,0 +1,36 @@
+#!/system/xbin/sh
+	cat /dev/input/event1 > /dev/keycheck&
+	sleep 3
+	kill -9 $!
+	if [ -s /dev/keycheck -o -f /data/local/tmp/xrecovery ]
+	then
+	rm -f /data/local/tmp/xrecovery
+	# remount rootfs rw
+	mount -o remount,rw rootfs /
+
+	# Umount MTDs
+	umount -l /dev/block/mtdblock1
+	umount -l /dev/block/mtdblock2
+	umount -l /dev/block/mtdblock3
+
+	# Mount recovery partition
+	cd /
+	rm -r /sbin
+	rm -f etc
+	if [ -f /system/bin/recovery.tar ]
+	then
+		tar -xf /system/bin/recovery.tar
+	else
+		tar -xf /system/bin/xrecovery.tar
+	fi
+
+	# Umount /system
+	umount -l /dev/block/mtdblock0
+
+	# chroot
+	chroot / /init
+
+	fi
+	# Continue booting
+	/system/bin/charger
+	
